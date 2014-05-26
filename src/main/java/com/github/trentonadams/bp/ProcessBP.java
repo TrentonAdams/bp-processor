@@ -17,6 +17,14 @@ import java.util.*;
  * Class for processing withings health mate data obtained from the wireless
  * blood pressure monitor.
  * <p/>
+ * First argument is CSV to read, assuming no headers at top of file
+ * <p/>
+ * Second argument is CSV file to create/overwrite with compiled daily average
+ * data.
+ * <p/>
+ * We assume you are using comments the same way we do, as comma separated
+ * tags.
+ * <p/>
  * Created :  25/05/14 4:30 PM MST
  * <p/>
  * Modified : $Date$ UTC
