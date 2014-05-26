@@ -17,6 +17,11 @@
     </dependency>
   </dependencies>
 
+  <properties>
+    <infile>/home/share/downloads/bp.csv</infile>
+    <outfile>/home/share/downloads/bp-new.csv</outfile>
+  </properties>
+
   <build>
     <plugins>
       <plugin>
@@ -45,8 +50,8 @@
           <includePluginDependencies>true</includePluginDependencies>
           <mainClass>com.github.trentonadams.bp.ProcessBP</mainClass>
           <arguments>
-            <argument>/home/share/downloads/bp.csv</argument>
-            <argument>/home/share/downloads/bp-new.csv</argument>
+            <argument>${infile}</argument>
+            <argument>${outfile}</argument>
           </arguments>
         </configuration>
       </plugin>

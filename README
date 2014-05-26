@@ -1,0 +1,29 @@
+This file is part of the Blood Pressure Processor.
+
+Copyright Trenton D. Adams <trent aut trentonadams daught ca>
+
+Blood Pressure Processor is free software: you can redistribute it and/or modify it under
+the terms of the GNU Lesser General Public License as published by the
+Free Software Foundation, either version 3 of the License, or (at your
+option) any later version.
+
+Blood Pressure Processor is distributed in the hope that it will be useful, but WITHOUT ANY
+WARRANTY; without even the implied warranty of MERCHANTABILITY or
+FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public
+License for more details.
+
+You should have received a copy of the GNU Lesser General Public
+License along with Blood Pressure Processor.  If not, see <http://www.gnu.org/licenses/>.
+
+See the COPYING file for more information.
+
+There is no proper website or domain for this project as of yet.  Github 
+is THE place to find it.  http://trentonadams.github.com/bp-processor/
+
+Okay, let's try it out; copy and paste the following commands.
+
+git clone git://github.com/TrentonAdams/bp-processor.git
+cd bp-processor
+mvn -Ptest -Dinfile=/tmp/bp.csv -Doutfile=bp-new.csv install exec:java
+
+Thanks.
