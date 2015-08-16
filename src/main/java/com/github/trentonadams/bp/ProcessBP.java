@@ -76,7 +76,7 @@ public class ProcessBP
             final String[] curTags =
                 sTags == null ? STRINGS : sTags.split(",");
             for (final String tag : curTags)
-            {
+            {   // compiling complete list of tags, and merging them.
                 tags.add(tag.trim());
             }
 
@@ -87,46 +87,54 @@ public class ProcessBP
             if (cal.get(Calendar.DAY_OF_YEAR) != previousCal.get(
                 Calendar.DAY_OF_YEAR))
             {   // changing dates, do the average and combine the tags
-                int hrTotal = 0;
-                int systolicTotal = 0;
-                int diastolicTotal = 0;
-                for (final BPLine line : currentLines)
-                {
-                    hrTotal += line.getHr();
-                    systolicTotal += line.getSystolic();
-                    diastolicTotal += line.getDiastolic();
-                }
-
-                // average the readings
-                hrTotal = hrTotal / currentLines.size();
-                systolicTotal = systolicTotal / currentLines.size();
-                diastolicTotal = diastolicTotal / currentLines.size();
-                previousLine.setHr(hrTotal);
-                previousLine.setSystolic(systolicTotal);
-                previousLine.setDiastolic(diastolicTotal);
-
-                // separate tags by commas...
-                String csvTags = "";
-                final String[] array = tags.toArray(STRINGS);
-                for (int i = 0; i < array.length; i++)
-                {
-                    final String tag = array[i];
-                    csvTags += tag;
-                    if (i < array.length - 1)
-                    {
-                        csvTags += ',';
-                    }
-                }
-                previousLine.setTags(csvTags);
-
-                serializer.write(previousLine);
-                currentLines.clear();
-                tags.clear();
+                calcAverage(serializer, currentLines, tags, previousLine);
             }
             previousLine = currentBPLine;
         }
+        calcAverage(serializer, currentLines, tags, previousLine);
 
         serializer.close(true);
         deserializer.close(true);
+    }
+
+    private static void calcAverage(Serializer serializer,
+        List<BPLine> currentLines, Set<String> tags, BPLine previousLine)
+    {
+        int hrTotal = 0;
+        int systolicTotal = 0;
+        int diastolicTotal = 0;
+        for (final BPLine line : currentLines)
+        {
+            hrTotal += line.getHr();
+            systolicTotal += line.getSystolic();
+            diastolicTotal += line.getDiastolic();
+        }
+
+        // average the readings
+        hrTotal = hrTotal / currentLines.size();
+        systolicTotal = systolicTotal / currentLines.size();
+        diastolicTotal = diastolicTotal / currentLines.size();
+        previousLine.setHr(hrTotal);
+        previousLine.setSystolic(systolicTotal);
+        previousLine.setDiastolic(diastolicTotal);
+
+        // separate tags by commas...
+        String csvTags = "";
+        final String[] array = tags.toArray(STRINGS);
+        for (int i = 0; i < array.length; i++)
+        {
+            final String tag = array[i];
+            csvTags += tag;
+            if (i < array.length - 1)
+            {
+                csvTags += ',';
+            }
+        }
+        previousLine.setTags(csvTags);
+
+        // output data to new csv file
+        serializer.write(previousLine);
+        currentLines.clear();
+        tags.clear();
     }
 }
